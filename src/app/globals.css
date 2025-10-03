@@ -1,26 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* brown */
+  --color-brown-110-f : #73583D;
+  --color-brown-100-f: #695747;
+  --color-brown-90-b: #A27B5C;
+  --color-brown-80-f : #CEA47C;
+  --color-brown-70-f: #B09C8D;
+  --color-brown-60-b: #B49B82;
+  --color-brown-50: #B5947D;
+  --color-brown-40-f: #B5947D;
+  --color-brown-30: #EEDAC8;
+  --color-brown-20: #F9F6F4;
+  --color-brown-10: #FCFAF9;
+
+
+  /* gray  */
+
+  --color-gray-100: #262626;
+  --color-gray-90: #363636;
+  --color-gray-80 : #494949;
+  --color-gray-70: #555555;
+  --color-gray-60: #737373;
+  --color-gray-50: #8A8A8A;
+  --color-gray-40: #9F9F9F;
+  --color-gray-30: #ABABAB;
+  --color-gray-20: #E9E9E9;
+  --color-gray-10: #F0F1F1;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+* {
+  font-family:'Urbanist'
+} 
