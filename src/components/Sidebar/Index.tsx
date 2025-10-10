@@ -45,7 +45,7 @@ export default function Sidebar(){
                 {sidebarItems.map((item, index)=>(
                     <div className="flex gap-5" key={index} onClick={()=>{handleSelected(item.name)}}>
                         <item.icon fill={`${selected==item.name? '#ffffff':'#D5BAA8'}`}/>
-                        <p className={`${selected==item.name ? 'text-white':'text-[#D5BAA8]'} text-2xl font-medium`}>{item.name}</p>
+                        <p className={`${selected==item.name ? 'text-white':'text-[#D5BAA8]'} text-xl font-medium`}>{item.name}</p>
                     </div>
                 ))}
             </div>
