@@ -32,7 +32,7 @@ const schemaModelos = z.object ({
     ),
     imagem: z.any().refine((files)=>files?.[0] instanceof File, {
         message: 'Imagem obriatória'
-    }).transform((files)=> files?.[0] as File).optional()
+    }).transform((files)=> files?.[0] as File)
 })
 export type ModeloFormData = z.infer<typeof schemaModelos>
 

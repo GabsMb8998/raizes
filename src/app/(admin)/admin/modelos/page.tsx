@@ -48,7 +48,7 @@ export default function ModelosScreen () {
         getModeloById(id)
     }
 
-    const handleOpenModalEdit = async (id: number) =>{
+    const handleOpenModalEdit = async (id: number) => {
         const data = await getModeloById(id)
         if(data){
             console.log('guardou antigo')
@@ -58,7 +58,7 @@ export default function ModelosScreen () {
     }
 
     const onSubmitPost = useCallback(async (form: ModeloFormData) => {
-        // postModelo(form)
+        postModelo(form)
     }, [])
 
     const onSubmitPatch = useCallback(async (form: ModeloFormData)=> {
