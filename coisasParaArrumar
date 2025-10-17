@@ -2,6 +2,14 @@
 
 - hover no botao na pagina de descricao de modelo
 
--border colorido na tabela de modelos (admin)
+- border colorido na tabela de modelos (admin)
 
 - adicionar input de arquivo no modal de modelos
+
+-  loading
+
+- pegar token novamente
+
+- responsividade
+
+- na tabela limitar os caracteres com oq cabe no espaço adicionar ...

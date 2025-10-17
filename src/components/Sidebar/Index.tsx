@@ -30,8 +30,6 @@ export default function Sidebar(){
 
     const handleSelected = (item: string) =>{
         setSelected(item)
-        console.log('item:',item)
-        console.log('selected:',selected)
     }
 
     return (

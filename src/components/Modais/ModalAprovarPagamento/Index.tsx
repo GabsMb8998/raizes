@@ -1,14 +1,18 @@
 import { forwardRef } from "react";
 import ContainerModal, { ModalHandle } from "../ContainerModal/Index";
-import { ColumnsPagamentoType } from "@/app/admin/pagamentos/page";
 import Button from "@/components/Button/Button";
 import TextDefault from "@/components/TextDefault/Index";
+import { ColumnsPagamentoType } from "@/app/(admin)/admin/pagamentos/page";
+import useUsuarioAtual from "@/hooks/useUsuarioAtual";
 
 interface ModalAprovarPagamentoProps {
     data: ColumnsPagamentoType
 }
 
 const ModalAprovarPagamento = forwardRef<ModalHandle, ModalAprovarPagamentoProps>(({data}, ref)=>{
+
+
+
     return (
         <ContainerModal title="Confirmar Pagamento" ref={ref}>
 

@@ -15,11 +15,6 @@ const ModalDeletar = forwardRef<ModalHandle, ModalDeletarProps>(({title, onClick
                     <Button label="cancelar" variant="secondary" onClick={()=>(ref as any).current?.close()} />
                     <Button label="confirmar" variant="primary" onClick={onClick} />
                 </div>
-
-               <div className="flex gap-6 justify-end w-full mt-8">
-                                <Button label="cancelar" variant="secondary" onClick={()=>(ref as any).current?.close()} />
-                                <Button label={'confirmar'} variant="primary" onClick={onClick} />
-                </div>
         </ContainerModal>
     )
 })
