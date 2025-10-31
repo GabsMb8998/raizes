@@ -9,6 +9,11 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
+    "@js-temporal/polyfill": "^0.5.1",
+    "@schedule-x/calendar": "^3.3.0",
+    "@schedule-x/calendar-controls": "^3.3.0",
+    "@schedule-x/react": "^3.3.0",
+    "@schedule-x/theme-default": "^3.3.0",
     "axios": "^1.12.2",
     "firebase": "^12.4.0",
     "firebase-admin": "^13.5.0",

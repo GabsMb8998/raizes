@@ -11,23 +11,30 @@ export type ModalContainerProps = {
     children: ReactNode
     width?: string
     clearErrors?: () => void
+    onClose?: () => void
 }
 
-const ContainerModal = forwardRef<ModalHandle, ModalContainerProps>(({title, children, width, clearErrors}, ref)=>{
+const ContainerModal = forwardRef<ModalHandle, ModalContainerProps>(({title, children, width, clearErrors, onClose}, ref)=>{
 
     const [isOpen, setIsOpen] = useState(false)
 
-    const open = () => setIsOpen(true)
+    const open = () => {
+        console.log("entrou na funcao open")
+        setIsOpen(true)}
     const close = () => {
         setIsOpen(false)
         if (clearErrors){
             clearErrors()
         }
+        if(onClose){
+            console.log("entrou no onClose")
+            onClose()
+        }
     }
 
     useImperativeHandle(ref, ()=> ({
         open,
-        close
+        close,
     }))
 
     useEffect(() => {

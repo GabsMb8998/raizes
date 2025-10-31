@@ -1,12 +1,12 @@
 import { apiClient } from "@/lib/api/apiClient"
-import { ModeloState } from "@/store/useModeloStore"
+import { ModeloState, ModeloStateGet } from "@/store/useModeloStore"
 import { doFetch } from "@/utils/request"
 
 const fetcher = doFetch(apiClient)
 
 export const GetModelo = async () => {
     try {
-        const response = await fetcher<ModeloState[]>('get', '/modelos')
+        const response = await fetcher<ModeloStateGet[]>('get', '/modelos')
         return response
     }catch(error){
         throw new Error('Erro ao fazer ao buscar modelos')
@@ -15,7 +15,7 @@ export const GetModelo = async () => {
 
 export const GetModeloById = async (id:number) => {
     try {
-        const response = await fetcher<ModeloState>('get', `/modelos/${id}`)
+        const response = await fetcher<ModeloStateGet>('get', `/modelos/${id}`)
         return response
     }catch(error){
         throw new Error('Erro ao fazer ao buscar o modelo')
@@ -40,34 +40,34 @@ export const PostModelos = async (modelo: Omit<ModeloState, 'id'>) => {
 } 
 
 
-export const PatchModelos = async (modelo: Partial<ModeloState>, id: number) => {
+export const PatchModelos = async (modelo: Partial<Omit<ModeloState, "imagem">>, imagem: File,  id: number) => {
     try {
 
         interface EnviarProps {
             dados?: Partial<ModeloState>
-            imagem?: File | null
         }
-
-        
-        const {imagem, ...dados} = modelo
+        console.log("imagem patch:",imagem)
 
         const formData = new FormData()
         
-        // if(imagem){
-        //     formData.append("imagem", imagem)
-        // }
-
-        const enviarDados : EnviarProps = {
-            dados: dados,
+        if(imagem){
+            formData.append("imagem", imagem)
         }
 
-        formData.append(
-            "dados",
-            new Blob([JSON.stringify(dados)], { type: "application/json" })
-        )
+        const enviarDados : EnviarProps = {
+            dados: modelo,
+        }
 
+        // formData.append(
+        //     "dados",
+        //     new Blob([JSON.stringify(modelo)], { type: "application/json" })
+        // )
 
-        console.log("JSON REAL:",JSON.stringify(dados));        
+        formData.append("dados", JSON.stringify(modelo));
+
+        
+
+        console.log("JSON REAL:",JSON.stringify(modelo));        
 
         console.log("id na service:",id)
         console.log("modelo na service:", enviarDados)

@@ -1,8 +1,34 @@
+'use client'
 import Header from "@/components/Header/Index";
 import Image from "next/image";
 import imageYagoLima from "../../../../public/YagoLima.png"
+import useModeloStore, { ModeloState, ModeloStateGet } from "@/store/useModeloStore";
+import { useEffect, useRef } from "react";
+import { slugify } from "@/utils/functions/formater";
+import { useRouter } from "next/navigation";
+import api from "@/lib/api";
+import { url } from "@/utils/constants/constants";
+import { SelectedDropDown } from "@/components/DropDown/Index";
 
 export default function HomePage(){
+
+    const router = useRouter()
+
+    const { getModelo, isLoading, modeloDataGet } = useModeloStore()
+
+
+    useEffect(()=>{
+        getModelo()
+    }, [])
+
+    modeloDataGet?.map((item, index)=> {
+        console.log("imagem:",item.imagemUrl)
+    })
+
+    const handlePageModeloDescription = (modelo: ModeloStateGet) => {
+        const nomeSlug = slugify(modelo.nome)
+        router.push(`/modelos/${modelo.id}-${nomeSlug}`)
+    }
 
     return(
         <>
@@ -23,10 +49,20 @@ export default function HomePage(){
 
             {/* modelos 1  */}
             <div className="flex gap-6 justify-center">
+                 { modeloDataGet?.slice(0,4)?.map((item, index)=> (
+                        <div className="relative h-[430px] w-72 border-1 border-[#7D7D7D] flex justify-center" key={index} onClick={()=>handlePageModeloDescription(item)}>
+                            {/* <Image alt="" src={`${url}/uploads/${item.imagemUrl}`}/> */}
+                            <div className="bg-gradient-to-t from-black/100 to-black/0 absolute h-full w-full"></div>
+                            <span className="text-white text-xl z-10 self-end mb-3">{item.nome.toUpperCase()}</span>
+                        </div>
+                        ))
+                    }
+
+
+                {/* <div className="bg-amber-950 h-[430px] w-72"></div>
                 <div className="bg-amber-950 h-[430px] w-72"></div>
                 <div className="bg-amber-950 h-[430px] w-72"></div>
-                <div className="bg-amber-950 h-[430px] w-72"></div>
-                <div className="bg-amber-950 h-[430px] w-72"></div>
+                <div className="bg-amber-950 h-[430px] w-72"></div> */}
             </div>
 
             {/* banner1 */}

@@ -11,6 +11,21 @@ importers:
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.65.0(react@19.1.0))
+      '@js-temporal/polyfill':
+        specifier: ^0.5.1
+        version: 0.5.1
+      '@schedule-x/calendar':
+        specifier: ^3.3.0
+        version: 3.3.0(@preact/signals@2.3.2(preact@10.27.2))(preact@10.27.2)(temporal-polyfill@0.3.0)
+      '@schedule-x/calendar-controls':
+        specifier: ^3.3.0
+        version: 3.3.0
+      '@schedule-x/react':
+        specifier: ^3.3.0
+        version: 3.3.0(@schedule-x/calendar@3.3.0(@preact/signals@2.3.2(preact@10.27.2))(preact@10.27.2)(temporal-polyfill@0.3.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@schedule-x/theme-default':
+        specifier: ^3.3.0
+        version: 3.3.0
       axios:
         specifier: ^1.12.2
         version: 1.12.2
@@ -319,7 +334,7 @@ packages:
     hasBin: true
 
   '@hookform/resolvers@5.2.2':
-    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/@hookform/resolvers/-/resolvers-5.2.2.tgz}
+    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
     peerDependencies:
       react-hook-form: ^7.55.0
 
@@ -472,6 +487,10 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
+  '@js-temporal/polyfill@0.5.1':
+    resolution: {integrity: sha512-hloP58zRVCRSpgDxmqCWJNlizAlUgJFqG2ypq79DCvyv9tHjRYMDOcPFjzfl/A1/YxDvRCZz8wvZvmapQnKwFQ==}
+    engines: {node: '>=12'}
+
   '@next/env@15.5.4':
     resolution: {integrity: sha512-27SQhYp5QryzIT5uO8hq99C69eLQ7qkzkDPsk3N+GuS2XgOgoYEeOav7Pf8Tn4drECOVDsDg8oj+/DVy8qQL2A==}
 
@@ -527,6 +546,14 @@ packages:
     resolution: {integrity: sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg==}
     engines: {node: '>=8.0.0'}
 
+  '@preact/signals-core@1.12.1':
+    resolution: {integrity: sha512-BwbTXpj+9QutoZLQvbttRg5x3l5468qaV2kufh+51yha1c53ep5dY4kTuZR35+3pAZxpfQerGJiQqg34ZNZ6uA==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/@preact/signals-core/-/signals-core-1.12.1.tgz}
+
+  '@preact/signals@2.3.2':
+    resolution: {integrity: sha512-Q22avIn4z0BQnmFeo6Y5HCnJTo8VufN84zN51OtqeNgZOVCYgdwEOcJKVX1x/IrjRVxUnOy6Ubn7H5aVFujXaQ==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/@preact/signals/-/signals-2.3.2.tgz}
+    peerDependencies:
+      preact: '>= 10.25.0 || >=11.0.0-0'
+
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
 
@@ -557,8 +584,28 @@ packages:
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
 
+  '@schedule-x/calendar-controls@3.3.0':
+    resolution: {integrity: sha512-DVSTjPM0y5fsbX9O53TQOxXWAuTLq7bNqt/HB99CQGmbSFJOIsM9lM22Rb41cWuyJkVg8y9Y94OdWfyKaQhf0Q==}
+
+  '@schedule-x/calendar@3.3.0':
+    resolution: {integrity: sha512-wPzRM/zlTy1HTeqxJfGGp5PdhAyFEKvNb1Kcsdavig+X+80mWEpBbxvachoQgy5TUI9gSVdcPdxBIOmnW8bS9w==}
+    peerDependencies:
+      '@preact/signals': ^2.0.2
+      preact: ^10.19.2
+      temporal-polyfill: 0.3.0
+
+  '@schedule-x/react@3.3.0':
+    resolution: {integrity: sha512-k1ji9Q9UHxmm9xEUizEgTwCo+DcadhvyDBQFW9bYMfXBK5kre5gP7CUrw6OGnQwqav1Cp89uDmF5p+NOZMUKeA==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/@schedule-x/react/-/react-3.3.0.tgz}
+    peerDependencies:
+      '@schedule-x/calendar': ^3.1.0
+      react: ^16.7.0 || ^17 || ^18 || ^19
+      react-dom: ^16.7.0 || ^17 || ^18 || ^19
+
+  '@schedule-x/theme-default@3.3.0':
+    resolution: {integrity: sha512-B9TT7+CQUFdZL2IfmT9Tt9GWfhB6Dxqerl07bPtuQebjHPuJcsYKVnyAc646x6rI6lzVhe2wnde4oa6PGGKz6g==}
+
   '@standard-schema/utils@0.3.0':
-    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/@standard-schema/utils/-/utils-0.3.0.tgz}
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
 
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
@@ -997,6 +1044,9 @@ packages:
   jose@4.15.9:
     resolution: {integrity: sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==}
 
+  jsbi@4.3.2:
+    resolution: {integrity: sha512-9fqMSQbhJykSeii05nxKl4m6Eqn2P6rOlYiS+C5Dr/HPIU/7yZxu5qzbs40tgaFORiw2Amd0mirjxatXYMkIew==}
+
   json-bigint@1.0.0:
     resolution: {integrity: sha512-SiPv/8VpZuWbvLSMtTDU8hEfrZWg/mH/nV/b4o0CYbSxu1UIQPLdwKOCIyLQX+VIPO5vrLX3i8qtqFyhdPSUSQ==}
 
@@ -1216,6 +1266,9 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  preact@10.27.2:
+    resolution: {integrity: sha512-5SYSgFKSyhCbk6SrXyMpqjb5+MQBgfvEKE/OC+PujcY34sOpqtr+0AZQtPYx5IA6VxynQ7rUPCtKzyovpj9Bpg==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/preact/-/preact-10.27.2.tgz}
+
   proto3-json-serializer@2.0.2:
     resolution: {integrity: sha512-SAzp/O4Yh02jGdRc+uIrGoe87dkN/XtwxfZ4ZyafJHymd79ozp5VG5nyZ7ygqPM5+cpLDjjGnYFUkngonyDPOQ==}
     engines: {node: '>=14.0.0'}
@@ -1327,6 +1380,12 @@ packages:
   teeny-request@9.0.0:
     resolution: {integrity: sha512-resvxdc6Mgb7YEThw6G6bExlXKkv6+YbuzGg9xuXxSgxJF7Ozs+o8Y9+2R3sArdWdW8nOokoQb1yrpFB0pQK2g==}
     engines: {node: '>=14'}
+
+  temporal-polyfill@0.3.0:
+    resolution: {integrity: sha512-qNsTkX9K8hi+FHDfHmf22e/OGuXmfBm9RqNismxBrnSmZVJKegQ+HYYXT+R7Ha8F/YSm2Y34vmzD4cxMu2u95g==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/temporal-polyfill/-/temporal-polyfill-0.3.0.tgz}
+
+  temporal-spec@0.3.0:
+    resolution: {integrity: sha512-n+noVpIqz4hYgFSMOSiINNOUOMFtV5cZQNCmmszA6GiVFVRt3G7AqVyhXjhCSmowvQn+NsGn+jMDMKJYHd3bSQ==, tarball: https://rb-artifactory.bosch.com:443/artifactory/api/npm/npm-repo/temporal-spec/-/temporal-spec-0.3.0.tgz}
 
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
@@ -1946,6 +2005,10 @@ snapshots:
   '@js-sdsl/ordered-map@4.4.2':
     optional: true
 
+  '@js-temporal/polyfill@0.5.1':
+    dependencies:
+      jsbi: 4.3.2
+
   '@next/env@15.5.4': {}
 
   '@next/swc-darwin-arm64@15.5.4':
@@ -1975,6 +2038,13 @@ snapshots:
   '@opentelemetry/api@1.9.0':
     optional: true
 
+  '@preact/signals-core@1.12.1': {}
+
+  '@preact/signals@2.3.2(preact@10.27.2)':
+    dependencies:
+      '@preact/signals-core': 1.12.1
+      preact: 10.27.2
+
   '@protobufjs/aspromise@1.1.2': {}
 
   '@protobufjs/base64@1.1.2': {}
@@ -1997,6 +2067,22 @@ snapshots:
   '@protobufjs/pool@1.1.0': {}
 
   '@protobufjs/utf8@1.1.0': {}
+
+  '@schedule-x/calendar-controls@3.3.0': {}
+
+  '@schedule-x/calendar@3.3.0(@preact/signals@2.3.2(preact@10.27.2))(preact@10.27.2)(temporal-polyfill@0.3.0)':
+    dependencies:
+      '@preact/signals': 2.3.2(preact@10.27.2)
+      preact: 10.27.2
+      temporal-polyfill: 0.3.0
+
+  '@schedule-x/react@3.3.0(@schedule-x/calendar@3.3.0(@preact/signals@2.3.2(preact@10.27.2))(preact@10.27.2)(temporal-polyfill@0.3.0))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)':
+    dependencies:
+      '@schedule-x/calendar': 3.3.0(@preact/signals@2.3.2(preact@10.27.2))(preact@10.27.2)(temporal-polyfill@0.3.0)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
+
+  '@schedule-x/theme-default@3.3.0': {}
 
   '@standard-schema/utils@0.3.0': {}
 
@@ -2526,6 +2612,8 @@ snapshots:
 
   jose@4.15.9: {}
 
+  jsbi@4.3.2: {}
+
   json-bigint@1.0.0:
     dependencies:
       bignumber.js: 9.3.1
@@ -2734,6 +2822,8 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  preact@10.27.2: {}
+
   proto3-json-serializer@2.0.2:
     dependencies:
       protobufjs: 7.5.4
@@ -2884,6 +2974,12 @@ snapshots:
       - encoding
       - supports-color
     optional: true
+
+  temporal-polyfill@0.3.0:
+    dependencies:
+      temporal-spec: 0.3.0
+
+  temporal-spec@0.3.0: {}
 
   tr46@0.0.3: {}
 

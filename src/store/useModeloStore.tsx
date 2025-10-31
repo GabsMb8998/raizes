@@ -11,22 +11,27 @@ export type ModeloState = {
     imagem: File
 }
 
+export type ModeloStateGet = {
+    imagemUrl: string
+} & Omit<ModeloState, "imagem">
+
 interface ModeloStore {
     isLoading: boolean
-    modeloData: ModeloState[] | null
-    modelo: ModeloState | null
-    setModelo: (modelo: ModeloState) => void
+    modeloDataGet: ModeloStateGet[] | null
+    modelo: ModeloStateGet | null
+    setModelo: (modelo: ModeloStateGet) => void
     getModelo : () => void
-    getModeloById: (id: number) => Promise<ModeloState>
+    getModeloById: (id: number) => Promise<ModeloStateGet>
     postModelo: (modelo: Omit<ModeloState, 'id'>) => void
-    patchModelo: (modelo: Partial<ModeloState>, id: number) => void
+    patchModelo: (modelo: Partial<ModeloState>, imagem: File, id: number) => void
     deleteModelo: (id: number) => void
 }
 
 const useModeloStore = create<ModeloStore>((set)=> ({
     isLoading: false,
-    modeloData: null,
+    modeloDataGet: null,
     modelo: null,
+
     setModelo(modelo) {
         set({modelo: modelo})
     },
@@ -34,7 +39,7 @@ const useModeloStore = create<ModeloStore>((set)=> ({
         try {
             set({isLoading: true})
             const response = await GetModelo()
-            set({modeloData: response})
+            set({modeloDataGet: response})
             set({isLoading: false})
         } catch (err){
             set({isLoading: false})
@@ -48,7 +53,7 @@ const useModeloStore = create<ModeloStore>((set)=> ({
             const response = await PostModelos(modelo)
 
             const responseGet = await GetModelo()
-            set({modeloData : responseGet})
+            set({modeloDataGet : responseGet})
             
             set({isLoading: false})
 
@@ -58,29 +63,33 @@ const useModeloStore = create<ModeloStore>((set)=> ({
         }
     },
 
-        getModeloById: async (id) => {
-            try {
-                set({isLoading: true})
-                const response = await GetModeloById(id)
-                set({modelo: response})
-                set({isLoading: false})
-                return response
-            } catch (err){
-                set({isLoading: false})
-                console.log('erro ao fazer requisição')
-                throw new Error('erro ao fa')
-            }
-        },
-
-    patchModelo: async (modelo, id) => {
+    getModeloById: async (id) => {
         try {
             set({isLoading: true})
-            const response = await PatchModelos(modelo, id)
+            const response = await GetModeloById(id)
+            set({modelo: response})
+            set({isLoading: false})
+            return response
+        } catch (err){
+            set({isLoading: false})
+            console.log('erro ao fazer requisição')
+            throw new Error('erro ao fa')
+        }
+    },
 
-            const responseGet = await GetModelo()
-            set({modeloData: responseGet})
+    patchModelo: async (modelo, imagem, id) => {
+        try {
+            set({isLoading: true})
+            const response = await PatchModelos(modelo, imagem,  id)
+
+            set((state) => ({
+            modeloDataGet: state.modeloDataGet?.map(item =>
+                item.id === id ? { ...item, ...modelo } : item
+            ) || []
+        }))
 
             set({isLoading: false})
+
         } catch (err){
             set({isLoading: false})
             console.log('erro ao fazer requisição')
@@ -91,8 +100,9 @@ const useModeloStore = create<ModeloStore>((set)=> ({
             set({isLoading: true})
             const response = await DeleteModelos(id)
 
-            const responseGet = await GetModelo()
-            set({modeloData: responseGet})
+            set((state) => ({
+                modeloDataGet: state.modeloDataGet?.filter(item => item.id !== id) || []
+            }))
 
             set({isLoading: false})
 

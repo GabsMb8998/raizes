@@ -15,3 +15,17 @@
 - na tabela limitar os caracteres com oq cabe no espaço adicionar ...
 
 - controle de acesso
+
+- na pagina de descrição de modelos, no dropDown de dia, de o mes selecionado for o atual, só devem aparecer as opções do dia atual para frente
+
+-verificacao de formulario (modal add modelo e editar)
+
+-paginacao
+
+BUGS:
+
+- ao selecionar um dia (ex:31) no mes de outubro e ir para novembro, ele continua o dia 31 ;-;
+
+- consigo adicionar agendamentos na mesma data e horario se clicar no botao de agendar varias vezes
+
+-modal deve fechar ao clicar fora dele

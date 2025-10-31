@@ -1,24 +1,18 @@
-import { ModeloState } from "@/store/useModeloStore";
+import { ModeloState, ModeloStateGet } from "@/store/useModeloStore";
 
 export function getModeloPatch(
-  oldData: Omit<ModeloState, "id">,
-  newData: Partial<Omit<ModeloState, "id">>
+  oldData: Omit<ModeloState, "id" | "imagem">,
+  newData: Partial<Omit<ModeloState, "id" | "imagem">>
 ): Partial<Omit<ModeloState, "id">> {
 
     console.log("oldData:",oldData)
     console.log("newData", newData)
 
-  const patch: Partial<Omit<ModeloState, "id">> = {};
+  const patch: Partial<Omit<ModeloState, "id" | "imagem">> = {};
 
-  (Object.keys(newData) as Array<keyof Omit<ModeloState, "id">>).forEach((key) => {
+  (Object.keys(newData) as Array<keyof Omit<ModeloState, "id" | "imagem">>).forEach((key) => {
     const newValue = newData[key];
     const oldValue = oldData[key];
-
-    if (key === "imagem") {
-      // Sempre inclui imagem
-        patch[key] = newValue as File;  
-        return;
-    }
 
     if (newData[key] !== oldData[key]) {
       // Aqui atribuímos explicitamente para cada campo, usando switch

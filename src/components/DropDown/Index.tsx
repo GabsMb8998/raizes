@@ -1,6 +1,6 @@
 'use client'
 
-import { ButtonHTMLAttributes, ReactNode, useState } from "react"
+import { ButtonHTMLAttributes, forwardRef, ReactNode, useImperativeHandle, useState } from "react"
 import IconAgenda from "../../../public/icons/IconAgenda"
 import IconDropDown from "../../../public/icons/IconDropDown"
 
@@ -8,23 +8,33 @@ interface SelectProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     options? : string[] | number[]
     onChange?: (val: any) => void
     error?: string
-    children: ReactNode
+    children?: ReactNode
     defaultLabel?: string
 } 
 
-function DropDown({options, error, onChange, children,defaultLabel='Selecione uma opção',  ...props}:SelectProps){
+export type SelectedDropDown = {
+    selected: string | number
+}
+
+const DropDown= forwardRef<SelectedDropDown, SelectProps>(({options, error, onChange, children,defaultLabel= 'Selecione uma opção',  ...props}, ref)=>{
     const [isOpen, setIsOpen] = useState(false)
-    const [selected, setSelected] = useState<string | number>(defaultLabel)
+    const [selected, setSelected] = useState<string | number>(!props.value?defaultLabel:props.value.toString())
     
     const handleOpen = () => {setIsOpen(!isOpen)}
+
     const handleSelected = (val: string| number) => {
-        // onChange!(val)
+        if(onChange){
+            onChange(val)
+        }
         setSelected(val)
         setIsOpen(false)
-
     }
 
-    const options2 = ['teste', 'teste2', 'teste2', 'teste2', 'teste2']
+    useImperativeHandle(ref, () => ({
+        selected
+    }))
+
+    // const options2 = ['teste', 'teste2', 'teste2', 'teste2', 'teste2']
 
 
     return(
@@ -48,7 +58,7 @@ function DropDown({options, error, onChange, children,defaultLabel='Selecione um
 
             {isOpen && (
                 <div className="absolute w-full z-10 bg-white max-h-44 overflow-y-auto  shadow-lg border-1 border-[#E7E7E7] rounded-lg mt-1">
-                    {options2.map((option)=>(
+                    {options?.map((option)=>(
                         <div 
                         onClick={()=>handleSelected(option)}
                         className="my-2 mx-3 px-2 py-1 hover:bg-[#F5F5F5] rounded text-[#525252] font-medium">{option}</div>
@@ -58,6 +68,6 @@ function DropDown({options, error, onChange, children,defaultLabel='Selecione um
         </div>
 
     )
-}
+})
 
 export default DropDown

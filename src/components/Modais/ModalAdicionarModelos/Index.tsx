@@ -1,18 +1,18 @@
 import Button from "@/components/Button/Button";
 import ContainerModal, { ModalHandle } from "../ContainerModal/Index";
-import { forwardRef, useEffect } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import Textfield from "@/components/TextField/Index";
 import IconUploadFile from "../../../../public/icons/IconUploadFile";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
-import useModeloStore, { ModeloState } from "@/store/useModeloStore";
-import { is } from "zod/v4/locales";
+import useModeloStore, { ModeloStateGet } from "@/store/useModeloStore";
+import Image from "next/image";
 
 export interface ModalAdicionarEditarProps{
     onSubmit: (form: ModeloFormData) => Promise<void>
     method:  'POST' | 'PATCH',
-    data?: ModeloState
+    data?: ModeloStateGet | null
 }
 
 const schemaModelos = z.object ({
@@ -39,6 +39,7 @@ export type ModeloFormData = z.infer<typeof schemaModelos>
 const ModalAdicionarEditar = forwardRef<ModalHandle, ModalAdicionarEditarProps>(({onSubmit, method, data},ref)=>{
 
     const {isLoading} = useModeloStore()
+    const [preview, setPreview] = useState('')
 
     useEffect(()=>{
         async function testeToken() {
@@ -84,29 +85,63 @@ const ModalAdicionarEditar = forwardRef<ModalHandle, ModalAdicionarEditarProps>(
     const clearValues = () => {
         clearErrors()
         reset()
+        clearImage()
     }
+
+    const clearImage = () => {
+        if (preview) {
+            URL.revokeObjectURL(preview);
+        }
+        setPreview("")
+    }
+
+    const handleFileChange = ( e:React.ChangeEvent<HTMLInputElement> ) =>{
+        const file = e.target.files?.[0]
+        if(file) {
+            const imageURL = URL.createObjectURL(file)
+            setPreview(imageURL)
+        }
+    }
+
+    console.log("imageURL:",data?.imagemUrl)
     
         return(
-            <ContainerModal width="w-[800px]" title={method== "PATCH"? 'Editar Modelo' : 'Adicionar Modelo'} ref={ref as any} clearErrors={clearValues} >
+            <ContainerModal width="w-[800px]" title={method== "PATCH"? 'Editar Modelo' : 'Adicionar Modelo'} ref={ref as any} clearErrors={clearValues} onClose={clearImage} >
                 <div className="flex gap-8">
 
                     <div className="w-[400px] flex flex-col ">
                         <div className="h-[250px] bg-[#FCFCFC] border-1 border-[var(--color-brown-30)] rounded-sm" >
 
-                            <div className="flex flex-col items-center h-full justify-center text-[var(--color-gray-60)] gap-2">
-                                <IconUploadFile width={24}/>
-                                <p>Insira a foto do modelo</p>
+                            <div className="relative flex flex-col items-center w-full h-full justify-center text-[var(--color-gray-60)] gap-2">
+                                {preview ? (
+                                    <Image alt="" src={preview} fill className="rounded-md" />
+                                ): (
+                                    <div className="flex flex-col justify-center items-center">
+                                        <IconUploadFile width={24}/>
+                                        <p>Insira a foto do modelo</p>
+                                    </div>
+                                )}
+                                
                             </div>
                         </div>
 
-                        <input className="bg-[var(--color-brown-50)] text-white px-5 py-2 rounded mt-7" type="file" {...register('imagem')} ></input>
+                        <div className="flex justify-center mt-5 relative">
+                            <input className="absolute w-44 bottom-0 z-10 opacity-0 bg-[var(--color-brown-50)] text-white px-5 py-2 rounded mt-7" type="file" {...register('imagem', {onChange: (e)=>handleFileChange(e)})} ></input>
+                            <div className="relative">
+                                <span className="absolute mt-1.5 ml-5">
+                                    <IconUploadFile fill="#fff" width={20}/>
+                                </span>
+                                <button className="bg-[var(--color-brown-50)] w-44 rounded py-2 text-white font-medium pl-5">choose a file</button>
+                            </div>
+                        </div>
+
                     </div>
 
 
                         <form onSubmit={handleSubmit((data)=>{
                              if (!isLoading){
-                                 onSubmit(data)
-                             }
+                                onSubmit(data)
+                            }
                         })}>
                             <div className="flex flex-col gap-5">
                                 <Textfield label="Nome" {...register('nome')} error={errors.nome?.message}/>

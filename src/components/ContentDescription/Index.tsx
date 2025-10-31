@@ -11,25 +11,34 @@ type TypeitemsContentDescription = {
     icon: ReactNode
 }
 
-const itemsContentDescription :TypeitemsContentDescription[] = [
+interface ContentDescription {
+    duração: string
+    material: string
+    valorSinal: string
+}
+
+
+export default function ContentDescription({...props}: ContentDescription){
+
+    const itemsContentDescription :TypeitemsContentDescription[] = [
     {
         'subtext': 'duração',
-        'text': '8h',
+        'text': props.duração,
         'icon': <IconTime/> 
     },
     {
         'subtext': 'material',
-        'text': 'Jumbo e Cachos',
+        'text': props.material,
         'icon': <IconModelo fill="var(--color-brown-60)" width={38}/> 
     },
     {
         'subtext': 'valor sinal',
-        'text': 'R$100,00',
+        'text': props.valorSinal,
         'icon': <IconSinalPrice width={38}/> 
     },
 ]
 
-export default function ContentDescription(){
+
     return(
         <div className="flex justify-between w-full border-1 border-[#ccc] rounded p-10">
             {itemsContentDescription.map((item,index)=>(

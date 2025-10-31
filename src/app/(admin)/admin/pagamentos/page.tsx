@@ -1,14 +1,24 @@
 
 'use client'
 import HeaderTitle from "@/components/HeaderTitle/Index";
-import { Modelos } from "../modelos/page";
 import { useEffect, useRef, useState } from "react";
 import Table, { Column } from "@/components/Table/Index";
-import { formatarHora, formatarReais } from "@/functions/formater";
+import { formatarDataAnoMesDia, formatarHora, formatarHoraDate, formatarReais } from "@/utils/functions/formater";
 import { ModalHandle } from "@/components/Modais/ContainerModal/Index";
 import ModalAprovarPagamento from "@/components/Modais/ModalAprovarPagamento/Index";
+import useAgendamentoStore from "@/store/useAgendamentoStore";
+import { confirmarAgendamento, getAllPendingScheduling } from "@/services/serviceAgendamentos";
 
-export type ColumnsPagamentoType = Modelos & {name: string} & {date: string} & {hour: string}
+export type ColumnsPagamentoType = {
+    id: number
+    userName : string
+    duracao: string
+    modelo: string
+    valor_final: number
+    valor_sinal: number
+    date: string
+    hour: string
+}
 
 export default function PagamentosPage(){
 
@@ -16,21 +26,37 @@ export default function PagamentosPage(){
     const [selected, setSelected] = useState<ColumnsPagamentoType>()
     const modalConfirmarRef = useRef<ModalHandle>(null)
 
+    const {pendingScheduling, listarAgendamentosPendentes} = useAgendamentoStore()
+
     useEffect(()=>{
-        setData([
-            {duracao: 8, modelo: 'Nagô', valor_final: 300, valor_sinal: 100, name:'Ana Maluf', date: '19/10', hour: '13:00'},
-            {duracao: 8, modelo: 'Nagô', valor_final: 300, valor_sinal: 100, name: 'Ana maluf', date: '18/10', hour : '14:00'}
-        ])
+        listarAgendamentosPendentes()
     }, [])
 
-        const columns: Column<ColumnsPagamentoType>[] = [
-            {header: 'Nome' , accessor: 'name'},
-            {header: "Modelo", accessor: "modelo"},
-            {header: "v.final", accessor: (data)=>formatarReais(data.valor_final)},
-            {header: "v.sinal", accessor: (data)=>formatarReais(data.valor_sinal)},
-            {header: "duração", accessor: (data)=>formatarHora(data.duracao)},
-            {header: "data", accessor: 'date'},
-            {header: "hora", accessor: 'hour'},
+    useEffect(()=>{
+        if (pendingScheduling && pendingScheduling.length > 0) {
+            const formattedData: ColumnsPagamentoType[] = pendingScheduling.map(item => ({
+                id: item.id,
+                userName: item.usuario,
+                duracao: formatarHora(item.modelo.duracaoHoras),
+                modelo: item.modelo.nome,
+                valor_final: item.modelo.precoTotal,
+                valor_sinal: item.modelo.precoSinal,
+                date: formatarDataAnoMesDia(item.dataHora.toString()),
+                hour: formatarHoraDate(item.dataHora.toString()),
+        }));
+
+        setData(formattedData);
+    }
+    },[pendingScheduling])
+
+    const columns: Column<ColumnsPagamentoType>[] = [
+        {header: 'Nome' , accessor: 'userName'},
+        {header: "Modelo", accessor: "modelo"},
+        {header: "v.final", accessor: (data)=>formatarReais(data.valor_final)},
+        {header: "v.sinal", accessor: (data)=>formatarReais(data.valor_sinal)},
+        {header: "duração", accessor: "duracao"},
+        {header: "data", accessor: 'date'},
+        {header: "hora", accessor: 'hour'},
     ]
 
     const handleOpenModal = (data: ColumnsPagamentoType) => {
@@ -38,11 +64,19 @@ export default function PagamentosPage(){
         setSelected(data)
     }
 
+    const handleConfirmarPagamento = () => {
+        if(selected){
+            confirmarAgendamento(selected?.id)
+            getAllPendingScheduling()
+            modalConfirmarRef.current?.close()
+        }
+    }
+
     return(
-        <div>
+        <div className="w-full">
             <HeaderTitle title="Pagamentos"/>
 
-            <div className="mt-8">
+            <div className="mt-8 w-full">
                 {data && data.length > 0 ? (
                     <Table<ColumnsPagamentoType> columns={columns} data={data} renderActions={(data)=> (
                         <div className="flex justify-center gap-6">
@@ -57,7 +91,7 @@ export default function PagamentosPage(){
                 )}
             </div>
 
-            <ModalAprovarPagamento data={selected!} ref={modalConfirmarRef}/>
+            <ModalAprovarPagamento data={selected!} ref={modalConfirmarRef} onSubmit={handleConfirmarPagamento}/>
         </div>
     )
 }
